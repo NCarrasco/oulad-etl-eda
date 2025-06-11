@@ -1,130 +1,135 @@
-## 🧠📈 Caso Práctico 3 – OULAD - ETL & EDA con Ciencia de Datos
 
-Maestría en Ciencia de Datos e Inteligencia Artificial (MACDIA)
-Materia: Ciencia de Datos I – INF-7303-C1
-Profesor: Silverio Del Orbe A.
+# 🧠📈 Caso Práctico 3 – OULAD - ETL & EDA con Ciencia de Datos
+
+#### Maestría en Ciencia de Datos e Inteligencia Artificial (MACDIA)  
+Materia: Ciencia de Datos I – INF-7303-C1  
+###### Profesor: Silverio Del Orbe A.
 
 ---
 
 ## 🎯 Objetivo del Proyecto
 
-Este repositorio contiene la solución al caso práctico 3 de la Maestría en Ciencia de Datos e Inteligencia Artificial (MACDIA) Materia: Ciencia de Datos I – INF-7303-C1 ```Profesor:``` `Silverio Del Orbe A.`
+Este repositorio contiene una solución modularizada para el Caso Práctico 3. El objetivo principal es ejecutar un proceso completo de ETL y EDA utilizando el dataset OULAD. Se incluye:
 
-El objetivo principal es realizar un proceso completo de ETL (Extracción, Transformación y Carga) del dataset OULAD y desarrollar un Análisis Exploratorio de Datos (EDA) extendido utilizando Python. Incluye:
-
-* Limpieza y transformación de los datos.
-* Creación de claves primarias y foráneas.
-* Codificación ordinal de variables categóricas.
-* Carga en base de datos relacional (MySQL).
-* FullDomain en las tablas ASSESS y VLE.
-* Visualizaciones (boxplot, histograma, scatter, matriz de correlación, matriz de confusión).
+- Limpieza y transformación de datos.
+- Codificación ordinal de variables categóricas.
+- Carga de datos en una base de datos relacional MySQL.
+- Construcción de modelo relacional con claves primarias y foráneas.
+- Generación de FullDomain.
+- Visualizaciones EDA (boxplot, histograma, correlaciones, confusión).
+- Pruebas automatizadas con `pytest`.
 
 ---
 
-## 🛠️ Arquitectura de la Solución
-
-##### La solución está organizada de la siguiente manera:
+## 🛠️ Estructura del Proyecto
 
 ```
 oulad-etl-eda/
-├── data/                    # CSVs originales del dataset OULAD
-├── output/                  # Resultados del EDA (gráficas, matrices)
-├── scripts/
-│   ├── main.py              # Script principal que ejecuta todo el proceso
-├── schema.sql              # Script SQL para crear el esquema relacional
-├── requirements.txt        # Dependencias del proyecto en Python
-├── README.md               # Documentación del proyecto
+├── data/                  # Archivos CSV originales
+├── output/                # Gráficos y reportes EDA
+├── scripts/               # Scripts principales
+│   └── run.py             # Punto de entrada del pipeline
+├── src/
+│   ├── eda/
+│   │   └── visualization.py
+│   ├── etl/
+│   │   ├── extract.py
+│   │   ├── transform.py
+│   │   └── load.py
+│   ├── settings.py        # Configuración general
+│   ├── logger.py          # Configuración de logs
+│   └── utils/
+│       ├── correlation.py
+│       └── stats_summary.py
+├── test/
+│   ├── test_extract.py
+│   ├── test_load.py
+│   └── test_visualization.py
+├── schema.sql             # Script SQL para modelo relacional
+├── requirements.txt       # Dependencias
+├── README.md              # Documentación
 ```
 
 ---
 
-###  🔧 Stack Tecnológico
+## 🔧 Tecnologías Utilizadas
 
 | Componente      | Tecnología          |
 | --------------- | ------------------- |
-| ETL + EDA       | Python 3.12         |
+| Lenguaje        | Python 3.12         |
 | Visualizaciones | Matplotlib, Seaborn |
+| Machine Learning| Scikit-Learn        |
 | Base de Datos   | MySQL               |
-| IDE             | PyCharm / VS Code   |
+| Testing         | Pytest              |
+| IDE             | VS Code / PyCharm   |
 
 ---
 
-##### 🌟 Criterios de Evaluación Cubiertos
+## 🚀 Ejecución del Proyecto
 
-| Criterio                            | Cumplido |
-| ----------------------------------- | -------- |
-| Montar el OULAD en un DBMS          | ✅        |
-| ETL orquestado con transformaciones | ✅        |
-| FullDomain de ASSESS y VLE          | ✅        |
-| EDA extendido con visualizaciones   | ✅        |
-| Documentación clara y organizada    | ✅        |
-
----
-
-###  `📆 Dataset`
-
-El dataset OULAD está disponible para descarga desde la página oficial:
-[https://analyse.kmi.open.ac.uk/open\_dataset](https://analyse.kmi.open.ac.uk/open_dataset)
-
-Una vez descargado, colóquelo en la carpeta `data/`.
-
----
-
-## # ```🚀 Cómo Ejecutar el Proyecto```
-
-##### 1. Clonar el repositorio:
-
+1. **Clonar el repositorio**
 ```bash
-git clone https://github.com/tu_usuario/oulad-etl-eda.git
+git clone https://github.com/NCarrasco/oulad-etl-eda.git
 cd oulad-etl-eda
 ```
 
-##### 2. Crear entorno virtual y activar:
-
+2. **Crear entorno virtual**
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-##### 3. Instalar dependencias:
-
+3. **Instalar dependencias**
 ```bash
 pip install -r requirements.txt
 ```
 
-##### 4. Crear la base de datos `ouladdb` en MySQL manualmente:
-
+4. **Crear la base de datos MySQL**
 ```sql
 CREATE DATABASE ouladdb;
 ```
 
-##### 5. Ejecutar el script principal:
-
+5. **Ejecutar el proceso ETL y EDA**
 ```bash
-python scripts/main.py
+python scripts/run.py
 ```
 
-#### Los resultados se guardarán en la carpeta `output/`.
+---
+
+## 🧪 Ejecutar Tests
+
+```bash
+pytest test/
+```
 
 ---
 
-### 🔹 Autores
+## 📊 Dataset
 
-* Norman Yulifer Carrasco Medina
-* Miguel Mariano Pimentel Alcántara
-* Miguel Ángel Consoro Guzmán
+Descargar desde:  
+[https://analyse.kmi.open.ac.uk/open-dataset/download](https://analyse.kmi.open.ac.uk/open-dataset/download)  
+Colocar los archivos CSV en la carpeta `data/`.
+
 ---
 
-#### 📄 Licencia
+## 👥 Autores
+
+- Norman Yulifer Carrasco Medina  
+- Miguel Mariano Pimentel Alcántara  
+- Miguel Ángel Consoro Guzmán
+
+---
+
+## 📄 Licencia
 
 Este proyecto está bajo la Licencia MIT.
 
 ---
 
-#### 📓 Referencias
+## 📓 Referencias
 
-* [https://pandas.pydata.org/](https://pandas.pydata.org/)
-* [https://scikit-learn.org/](https://scikit-learn.org/)
-* [https://matplotlib.org/](https://matplotlib.org/)
-* [https://seaborn.pydata.org/](https://seaborn.pydata.org/)
-* [https://dev.mysql.com/](https://dev.mysql.com/)
+- https://pandas.pydata.org/
+- https://scikit-learn.org/
+- https://matplotlib.org/
+- https://seaborn.pydata.org/
+- https://dev.mysql.com/
