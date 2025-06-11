@@ -48,6 +48,10 @@ def insert_data(engine, data):
     drop_all_tables_in_order(engine)
 
     # Inserta data
-    data['courses'].to_sql('courses', engine, if_exists='replace', index=False)
-    data['studentInfo'].to_sql('studentInfo', engine, if_exists='replace', index=False)
-    data['assessments'].to_sql('assessments', engine, if_exists='replace', index=False)
+    data['courses'].to_sql('courses', engine, if_exists='replace', index=False, chunksize=500)
+    data['studentInfo'].to_sql('studentInfo', engine, if_exists='replace', index=False, chunksize=500)
+    data['assessments'].to_sql('assessments', engine, if_exists='replace', index=False, chunksize=500)
+    data["studentAssessment"].to_sql("studentAssessment", engine, if_exists='replace', index=False, chunksize=500)
+    data["studentVle"].to_sql("studentVle", engine, if_exists='replace', index=False, chunksize=500)
+    data["studentRegistration"].to_sql("studentRegistration", engine, if_exists='replace', index=False, chunksize=500)
+    data["vle"].to_sql("vle", engine, if_exists='replace', index=False, chunksize=500)
