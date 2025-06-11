@@ -1,11 +1,11 @@
-# settings.py
+# config/settings.py
 import os
 
 # Configuración general del proyecto
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Ruta de archivos CSV
-DATA_DIR = os.path.join(BASE_DIR, '../data')
+DATA_DIR = os.path.join(BASE_DIR, '../data/raw')
 
 # Ruta de salida para visualizaciones
 OUTPUT_DIR = os.path.join(BASE_DIR, '../output')

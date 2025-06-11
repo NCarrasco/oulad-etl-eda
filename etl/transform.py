@@ -1,12 +1,14 @@
+# etl/transform.py
+import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 
 
-def clean_dataframes(dfs):
-    """Elimina duplicados y aplica forward-fill a una lista de DataFrames."""
-    for df in dfs:
-        df.drop_duplicates(inplace=True)
-        df.ffill(inplace=True)
-    return dfs
+def clean_dataframes(data_dict: dict):
+    for name, df in data_dict.items():
+        if isinstance(df, pd.DataFrame):
+            df.drop_duplicates(inplace=True)
+            df.dropna(how='all', inplace=True)
+            df.columns = df.columns.str.strip()
 
 
 def encode_categorical_columns(studentInfo_df, assessments_df):

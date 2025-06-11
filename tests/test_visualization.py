@@ -7,11 +7,11 @@ from eda.visualization import generate_all_plots
 def test_generate_all_plots_creates_files(tmp_path):
     sample_data = {
         "studentInfo": pd.DataFrame({
-            "id_student": [1, 2],
-            "gender": ["M", "F"],
-            "gender_ord": [1, 0],
-            "final_result": ["Pass", "Fail"],
-            "final_result_ord": [1, 0]
+            "id_student": [1, 2, 3, 4],
+            "gender": ["M", "F", "F", "M"],
+            "gender_ord": [1, 0, 0, 1],
+            "final_result": ["Pass", "Fail", "Pass", "Fail"],
+            "final_result_ord": [1, 0, 1, 0]
         }),
         "assessments": pd.DataFrame({
             "id_assessment": [1, 2],
@@ -19,13 +19,13 @@ def test_generate_all_plots_creates_files(tmp_path):
             "assessment_type_ord": [0, 1]
         }),
         "studentAssessment": pd.DataFrame({
-            "id_student": [1, 2],
-            "id_assessment": [1, 2],
-            "score": [85.0, 60.0]
+            "id_student": [1, 2, 3, 4],
+            "id_assessment": [1, 2, 1, 2],
+            "score": [85.0, 60.0, 90.0, 55.0]
         }),
         "studentVle": pd.DataFrame({
-            "id_student": [1, 2],
-            "sum_click": [120, 80]
+            "id_student": [1, 2, 3, 4],
+            "sum_click": [120, 80, 140, 70]
         })
     }
 

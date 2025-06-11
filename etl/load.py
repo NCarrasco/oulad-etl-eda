@@ -1,9 +1,18 @@
 # etl/load.py
 from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, Float, ForeignKeyConstraint
+from config.schema import metadata  # Asegúrate de tener un archivo schema.py con los modelos
+from sqlalchemy import text
 
-def create_tables():
-    engine = create_engine('mysql+mysqlconnector://root:Admin.123@localhost/ouladdb', echo=True)
-    metadata = MetaData()
+def drop_all_tables_in_order(engine):
+    with engine.connect() as conn:
+        conn.execute(text("DROP TABLE IF EXISTS assessments"))
+        conn.execute(text("DROP TABLE IF EXISTS studentInfo"))
+        conn.execute(text("DROP TABLE IF EXISTS courses"))
+        conn.commit()
+
+
+def create_tables(engine):
+    metadata.create_all(engine)
 
     Table('courses', metadata,
         Column('code_module', String(20), primary_key=True),
@@ -35,6 +44,10 @@ def create_tables():
 
 
 def insert_data(engine, data):
+    # Elimina tablas en orden correcto
+    drop_all_tables_in_order(engine)
+
+    # Inserta data
     data['courses'].to_sql('courses', engine, if_exists='replace', index=False)
     data['studentInfo'].to_sql('studentInfo', engine, if_exists='replace', index=False)
     data['assessments'].to_sql('assessments', engine, if_exists='replace', index=False)
