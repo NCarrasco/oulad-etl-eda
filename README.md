@@ -133,3 +133,12 @@ Este proyecto está bajo la Licencia MIT.
 - https://matplotlib.org/
 - https://seaborn.pydata.org/
 - https://dev.mysql.com/
+
+
+## 📊 Visualizaciones generadas
+
+![Distribución de notas por tipo de evaluación](output/boxplot_notas.png)
+![Relaciôn entre actividad en el VLE y nota promedio](output/dispersion_clicks_vs_score.png)
+![Distribución de actividad total en el VLE por estudiantes](output/histograma_actividad.png)
+![Matriz de confusión](output/matriz_confusion.png)
+![Matriz de correlación](output/matriz_correlacion.png)
