@@ -1,6 +1,7 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
+import os
 
 def plot_correlation_matrix(studentInfo_df, studentVle_df, studentAssessment_df):
     # Agrupar score promedio por estudiante
@@ -21,11 +22,17 @@ def plot_correlation_matrix(studentInfo_df, studentVle_df, studentAssessment_df)
     # Filtrar solo columnas necesarias
     corr_df = merged_df[columns_for_corr].dropna()
 
-    # Calcular y mostrar matriz
+    # Calcular y graficar matriz de correlación
     correlation_matrix = corr_df.corr()
 
     plt.figure(figsize=(10, 8))
     sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap='coolwarm')
     plt.title("Matriz de Correlación")
     plt.tight_layout()
-    plt.show()
+
+    # Guardar imagen en output/eda
+    output_path = os.path.join("output", "eda", "correlation_matrix.png")
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    ##plt.savefig(output_path)
+    plt.savefig("output/eda/correlation_matrix.png")
+    plt.close()
