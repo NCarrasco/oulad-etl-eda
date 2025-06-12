@@ -5,13 +5,15 @@ import pandas as pd
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
+from scipy.stats import kurtosis, skew
+
+
 
 def generate_all_plots(data):
     os.makedirs("output", exist_ok=True)
     generate_boxplot(data)
     generate_histogram(data)
     generate_scatter(data)
-    generate_correlation(data)
     generate_confusion_matrix(data)
 
 def generate_boxplot(data):
@@ -44,16 +46,6 @@ def generate_scatter(data):
     plt.savefig("output/dispersion_clicks_vs_score.png")
     plt.close()
 
-def generate_correlation(data):
-    scores = data['studentAssessment'].groupby('id_student')['score'].mean().reset_index()
-    activity = data['studentVle'].groupby('id_student')['sum_click'].sum().reset_index()
-    merged_scores = scores.merge(activity, on='id_student')
-    corr = merged_scores.corr()
-    plt.figure(figsize=(8,6))
-    sns.heatmap(corr, annot=True, cmap='coolwarm')
-    plt.title('Matriz de correlación')
-    plt.savefig("output/matriz_correlacion.png")
-    plt.close()
 
 def generate_confusion_matrix(data):
     df = data['studentInfo'].copy()
@@ -73,4 +65,88 @@ def generate_confusion_matrix(data):
     plt.xlabel('Predicción')
     plt.ylabel('Real')
     plt.savefig("output/matriz_confusion.png")
+    plt.close()
+
+
+def plot_scatter_plots(studentInfo_df, studentVle_df, studentAssessment_df):
+    # Agrupar score promedio y clics por estudiante
+    scores = studentAssessment_df.groupby('id_student')['score'].mean().reset_index()
+    clicks = studentVle_df.groupby('id_student')['sum_click'].sum().reset_index()
+
+    # Merge con studentInfo
+    merged_df = studentInfo_df.merge(scores, on='id_student', how='left')
+    merged_df = merged_df.merge(clicks, on='id_student', how='left')
+
+    # Crear carpeta de salida
+    output_dir = os.path.join("output", "eda")
+    os.makedirs(output_dir, exist_ok=True)
+
+    # Scatter plot 1: sum_click vs score
+    plt.figure(figsize=(8, 6))
+    sns.scatterplot(data=merged_df, x='sum_click', y='score', hue='final_result_ord', palette='viridis')
+    plt.title('Relación entre Clics y Calificación')
+    plt.xlabel('Total de Clics')
+    plt.ylabel('Puntaje Promedio')
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, 'scatter_clicks_vs_score.png'))
+    plt.close()
+
+    # Scatter plot 2: studied_credits vs score
+    plt.figure(figsize=(8, 6))
+    sns.scatterplot(data=merged_df, x='studied_credits', y='score', hue='final_result_ord', palette='magma')
+    plt.title('Créditos Estudiados vs Puntaje Promedio')
+    plt.xlabel('Créditos Estudiados')
+    plt.ylabel('Puntaje Promedio')
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, 'scatter_credits_vs_score.png'))
+    plt.close()
+
+    #campana de Gauss basada en la variable score (puntaje)
+def plot_gaussian_distribution(studentAssessment_df: pd.DataFrame):
+    # Filtramos valores nulos y tomamos la columna de interés
+    scores = studentAssessment_df['score'].dropna()
+
+    # Creamos el gráfico
+    plt.figure(figsize=(10, 6))
+    sns.histplot(scores, kde=True, bins=50, color='skyblue', edgecolor='black')
+    plt.title("Distribución tipo Campana de Gauss - Score")
+    plt.xlabel("Puntaje")
+    plt.ylabel("Frecuencia")
+
+    # Guardamos el gráfico
+    output_path = os.path.join("output", "eda", "campana_gauss_score.png")
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    plt.savefig(output_path)
+    plt.close()
+
+
+def plot_kurtosis_skewness_barplots(df: pd.DataFrame, output_dir="output/eda"):
+    # Filtrar solo columnas numéricas
+    numeric_df = df.select_dtypes(include='number')
+
+    # Calcular kurtosis y skewness
+    kurtosis_vals = numeric_df.apply(lambda x: kurtosis(x.dropna()))
+    skew_vals = numeric_df.apply(lambda x: skew(x.dropna()))
+
+    # Crear carpeta de salida
+    os.makedirs(output_dir, exist_ok=True)
+
+    # Graficar kurtosis
+    plt.figure(figsize=(12, 6))
+    sns.barplot(x=kurtosis_vals.index, y=kurtosis_vals.values, palette="viridis")
+    plt.xticks(rotation=45)
+    plt.title("Kurtosis por Variable Numérica")
+    plt.ylabel("Kurtosis")
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, "kurtosis_barplot.png"))
+    plt.close()
+
+    # Graficar skewness
+    plt.figure(figsize=(12, 6))
+    sns.barplot(x=skew_vals.index, y=skew_vals.values, palette="magma")
+    plt.xticks(rotation=45)
+    plt.title("Asimetría (Skewness) por Variable Numérica")
+    plt.ylabel("Skewness")
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, "skewness_barplot.png"))
     plt.close()

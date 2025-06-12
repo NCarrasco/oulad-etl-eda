@@ -1,4 +1,3 @@
-
 # 🧠📈 Caso Práctico 3 – OULAD - ETL & EDA con Ciencia de Datos
 
 #### Maestría en Ciencia de Datos e Inteligencia Artificial (MACDIA)  
@@ -16,7 +15,7 @@ Este repositorio contiene una solución modularizada para el Caso Práctico 3. E
 - Carga de datos en una base de datos relacional MySQL.
 - Construcción de modelo relacional con claves primarias y foráneas.
 - Generación de FullDomain.
-- Visualizaciones EDA (boxplot, histograma, correlaciones, confusión).
+- Visualizaciones EDA (boxplot, histograma, correlaciones, dispersión, campana de Gauss, kurtosis, skewness, matriz de confusión).
 - Pruebas automatizadas con `pytest`.
 
 ---
@@ -26,21 +25,22 @@ Este repositorio contiene una solución modularizada para el Caso Práctico 3. E
 ```
 oulad-etl-eda/
 ├── data/                  # Archivos CSV originales
-├── output/                # Gráficos y reportes EDA
+├── output/eda/            # Gráficos y reportes EDA
 ├── scripts/               # Scripts principales
 │   └── run.py             # Punto de entrada del pipeline
 ├── src/
 │   ├── eda/
-│   │   └── visualization.py
+│   │   ├── visualization.py
+│   │   ├── correlation.py
+│   │   └── stats_summary.py
 │   ├── etl/
 │   │   ├── extract.py
 │   │   ├── transform.py
 │   │   └── load.py
-│   ├── settings.py        # Configuración general
-│   ├── logger.py          # Configuración de logs
-│   └── utils/
-│       ├── correlation.py
-│       └── stats_summary.py
+│   ├── common/
+│   │   └── logger.py
+│   └── config/
+│       └── settings.py
 ├── test/
 │   ├── test_extract.py
 │   ├── test_load.py
@@ -142,3 +142,6 @@ Este proyecto está bajo la Licencia MIT.
 ![Distribución de actividad total en el VLE por estudiantes](output/histograma_actividad.png)
 ![Matriz de confusión](output/matriz_confusion.png)
 ![Matriz de correlación](output/matriz_correlacion.png)
+![Campana de Gauss](output/eda/campana_gauss_score.png)
+![Matrix de Correlación](output/eda/correlation_matrix.png)
+![Distribución de actividad total en el VLE por estudiantes](output/matriz_confusion.png)

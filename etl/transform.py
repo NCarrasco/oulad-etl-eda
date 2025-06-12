@@ -1,6 +1,7 @@
 # etl/transform.py
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
+import os
 
 
 def clean_dataframes(data_dict: dict):
@@ -70,6 +71,7 @@ def encode_ordinal_columns(data: dict) -> dict:
 
     return data
 
+
 def generate_fulldomains(dfs: dict) -> dict:
     # Assessment type domain
     assess_types = dfs['assessments']['assessment_type'].dropna().unique()
@@ -88,4 +90,34 @@ def generate_fulldomains(dfs: dict) -> dict:
         dfs['vle_domain'] = df_vle_domain
 
     dfs['assess_domain'] = df_assess_domain
+
+    # ✅ Guardar dominios en CSV
+    output_dir = os.path.join("output", "eda", "fulldomain")
+    os.makedirs(output_dir, exist_ok=True)
+    df_assess_domain.to_csv(os.path.join(output_dir, "assessments_assessment_type_domain.csv"), index=False)
+    if 'vle_domain' in dfs:
+        df_vle_domain.to_csv(os.path.join(output_dir, "vle_activity_type_domain.csv"), index=False)
+
     return dfs
+
+
+def generate_fulldomain_summary(data_dict: dict):
+    """
+    Genera un resumen de dominios para los datasets 'assessments' y 'vle'.
+    Guarda los resultados como CSV en la carpeta output/fulldomain/.
+    """
+    output_dir = "output/fulldomain"
+    os.makedirs(output_dir, exist_ok=True)
+
+    targets = ["assessments", "vle"]
+    for table in targets:
+        if table in data_dict:
+            df = data_dict[table]
+            summary = {}
+
+            for col in df.select_dtypes(include=["object", "category"]).columns:
+                summary[col] = df[col].value_counts().to_frame("count")
+
+            # Guardar cada columna categórica en un archivo CSV separado
+            for col, val_counts in summary.items():
+                val_counts.to_csv(f"{output_dir}/{table}_{col}_domain.csv")

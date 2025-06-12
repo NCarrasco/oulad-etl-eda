@@ -5,5 +5,5 @@ data/
 __pycache__/
 .env/
 .venv/
-output/
+#output/
 
