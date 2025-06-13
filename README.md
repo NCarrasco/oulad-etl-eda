@@ -122,7 +122,7 @@ Colocar los archivos CSV en la carpeta `data/`.
 
 ## 📄 Licencia
 
-Este proyecto está bajo la Licencia MIT.
+Este proyecto está desarrollado con fines académicos para el curso "Ciencia de Datos I" de la Universidad Autónoma de Santo Domingo (UASD).
 
 ---
 
