@@ -4,7 +4,9 @@
 Materia: Ciencia de Datos I – INF-7303-C1  
 ###### Profesor: Silverio Del Orbe A.
 
+
 ---
+
 
 ## 🎯 Objetivo del Proyecto
 
@@ -63,7 +65,9 @@ oulad-etl-eda/
 | Testing         | Pytest              |
 | IDE             | VS Code / PyCharm   |
 
+
 ---
+
 
 ## 🚀 Ejecución del Proyecto
 
