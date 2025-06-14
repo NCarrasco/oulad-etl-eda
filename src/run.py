@@ -6,7 +6,8 @@ from eda.visualization import (
     generate_all_plots,
     plot_scatter_plots,
     plot_gaussian_distribution,
-    plot_kurtosis_skewness_barplots
+    plot_kurtosis_skewness_barplots,
+    plot_disability_analysis
 )
 from config.settings import SQLALCHEMY_URL, DATA_DIR
 from common.logger import setup_logger
@@ -52,6 +53,7 @@ if __name__ == "__main__":
         cleaned_data["studentVle"],
         cleaned_data["studentAssessment"]
     )
+    plot_disability_analysis(cleaned_data["studentInfo"])
     plot_scatter_plots(
         cleaned_data["studentInfo"],
         cleaned_data["studentVle"],

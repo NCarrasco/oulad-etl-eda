@@ -46,7 +46,6 @@ def generate_scatter(data):
     plt.savefig("output/dispersion_clicks_vs_score.png")
     plt.close()
 
-
 def generate_confusion_matrix(data):
     df = data['studentInfo'].copy()
     df['passed'] = (df['final_result'] == 'Pass').astype(int)
@@ -149,4 +148,17 @@ def plot_kurtosis_skewness_barplots(df: pd.DataFrame, output_dir="output/eda"):
     plt.ylabel("Skewness")
     plt.tight_layout()
     plt.savefig(os.path.join(output_dir, "skewness_barplot.png"))
+    plt.close()
+
+#Académicos según Discapacidad
+def plot_disability_analysis(student_info_df: pd.DataFrame):
+    import os
+    plt.figure(figsize=(8, 6))
+    sns.countplot(data=student_info_df, x='disability', hue='final_result_ord', palette='Set2')
+    plt.title("Distribución de Resultados Académicos según Discapacidad")
+    plt.xlabel("Discapacidad (N = No, Y = Sí)")
+    plt.ylabel("Cantidad de Estudiantes")
+    plt.legend(title='Resultado Final')
+    os.makedirs("output/eda", exist_ok=True)
+    plt.savefig("output/eda/discapacidad_vs_resultado.png")
     plt.close()

@@ -87,8 +87,8 @@ DROP VIEW IF EXISTS FullDomain;
 
 CREATE VIEW FullDomain AS
 SELECT
-    sa.code_module,
-    sa.code_presentation,
+    a.code_module,
+    a .code_presentation,
     sa.id_student,
     sa.id_assessment AS event_id,
     a.assessment_type,

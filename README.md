@@ -149,3 +149,4 @@ Este proyecto está desarrollado con fines académicos para el curso "Ciencia de
 ![Campana de Gauss](output/eda/campana_gauss_score.png)
 ![Matrix de Correlación](output/eda/correlation_matrix.png)
 ![Distribución de actividad total en el VLE por estudiantes](output/matriz_confusion.png)
+![Distribución de resultados académicos según discapacidad](output/eda/discapacidad_vs_resultado.png)
