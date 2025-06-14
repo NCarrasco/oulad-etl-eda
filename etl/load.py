@@ -44,6 +44,7 @@ def create_tables(engine):
 
 
 def insert_data(engine, data):
+    
     # Elimina tablas en orden correcto
     drop_all_tables_in_order(engine)
 

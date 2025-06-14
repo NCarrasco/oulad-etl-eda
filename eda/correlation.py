@@ -4,6 +4,7 @@ import pandas as pd
 import os
 
 def plot_correlation_matrix(studentInfo_df, studentVle_df, studentAssessment_df):
+
     # Agrupar score promedio por estudiante
     scores = studentAssessment_df.groupby('id_student')['score'].mean().reset_index()
 
@@ -33,6 +34,7 @@ def plot_correlation_matrix(studentInfo_df, studentVle_df, studentAssessment_df)
     # Guardar imagen en output/eda
     output_path = os.path.join("output", "eda", "correlation_matrix.png")
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    
     ##plt.savefig(output_path)
     plt.savefig("output/eda/correlation_matrix.png")
     plt.close()
